@@ -35,9 +35,10 @@ args = parser.parse_args()
 
 k = 4
 
+# There are 3 types of switches: Core, aggregate and edge switch according to k-ary fat tree topology.
 class MyTopo(Topo):
     def __init__(self, sw_path, switch, **opts):
-        # Initialize topology and default options
+        # Initialize topology with creating switches
         Topo.__init__(self, **opts)
 
         core_switches1 = []
@@ -106,7 +107,8 @@ class MyTopo(Topo):
 	aggr_switch.extend(aggr_switches2)
 	edge_switch.extend(edge_switches1)
 	edge_switch.extend(edge_switches2)        
-
+	
+	# Core-aggregate links.
         for i, s in enumerate(core_switches1):
 
             for a, b in enumerate(aggr_switches1):
@@ -116,13 +118,13 @@ class MyTopo(Topo):
 
             for a, b in enumerate(aggr_switches2):
                     self.addLink(s, b,**linkopts)
-
+	# Aggregate-edge links.
 	for m in range(0,k):
 		for i in range (1,3):
 			for j in range (1,3):
 				self.addLink(aggr_switch[k*(i-1)+m], edge_switch[k*(j-1)+m],**linkopts)
 
-
+	# Create hosts and link to appropriate edge hosts.
 	for i in range (1,4*k+1):
 		hosts.append(self.addHost('host%d' % (i)))
 
