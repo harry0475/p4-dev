@@ -43,6 +43,8 @@ class MyTopo(Topo):
         # Initialize topology with creating switches
         Topo.__init__(self, **opts)
 
+        count = 1
+
         core_switches1 = []
     	core_switches2 = []
         aggr_switches1 = []
@@ -61,49 +63,55 @@ class MyTopo(Topo):
             core_switches1.append(self.addSwitch('core%d' % (i),
                                     sw_path = sw_path,
                                     json_path = switch,
-                                    thrift_port = _THRIFT_BASE_PORT + i,
+                                    thrift_port = _THRIFT_BASE_PORT + count,
                                     pcap_dump = False,
-                                    device_id = i))
+                                    device_id = count))
+            count = count + 1
 
     	for i in range (k/2+1, k+1):
-                core_switches2.append(self.addSwitch('core%d' % (i),
-                                        sw_path = sw_path,
-                                        json_path = switch,
-                                        thrift_port = _THRIFT_BASE_PORT + i,
-                                        pcap_dump = False,
-                                        device_id = i))
+            core_switches2.append(self.addSwitch('core%d' % (i),
+                                    sw_path = sw_path,
+                                    json_path = switch,
+                                    thrift_port = _THRIFT_BASE_PORT + count,
+                                    pcap_dump = False,
+                                    device_id = count))
+            count = count + 1
 
         for j in range (1,k+1):
             aggr_switches1.append(self.addSwitch('aggr%d' % (2*j-1),
                                     sw_path = sw_path,
                                     json_path = switch,
-                                    thrift_port = _THRIFT_BASE_PORT + j,
+                                    thrift_port = _THRIFT_BASE_PORT + count,
                                     pcap_dump = False,
-                                    device_id = j))
+                                    device_id = count))
+            count = count + 1
 
         for j in range (1,k+1):
             aggr_switches2.append(self.addSwitch('aggr%d' % (2*j),
                                     sw_path = sw_path,
                                     json_path = switch,
-                                    thrift_port = _THRIFT_BASE_PORT + j,
+                                    thrift_port = _THRIFT_BASE_PORT + count,
                                     pcap_dump = False,
-                                    device_id = j))
+                                    device_id = count))
+            count = count + 1
 
     	for j in range (1,k+1):
-                edge_switches1.append(self.addSwitch('edge%d' % (2*j-1),
-                                        sw_path = sw_path,
-                                        json_path = switch,
-                                        thrift_port = _THRIFT_BASE_PORT + j,
-                                        pcap_dump = False,
-                                        device_id = j))
+            edge_switches1.append(self.addSwitch('edge%d' % (2*j-1),
+                                    sw_path = sw_path,
+                                    json_path = switch,
+                                    thrift_port = _THRIFT_BASE_PORT + count,
+                                    pcap_dump = False,
+                                    device_id = count))
+            count = count + 1
 
         for j in range (1,k+1):
             edge_switches2.append(self.addSwitch('edge%d' % (2*j),
                                     sw_path = sw_path,
                                     json_path = switch,
-                                    thrift_port = _THRIFT_BASE_PORT + j,
+                                    thrift_port = _THRIFT_BASE_PORT + count,
                                     pcap_dump = False,
-                                    device_id = j))
+                                    device_id = count))
+            count = count + 1
 
     	aggr_switch.extend(aggr_switches1)
     	aggr_switch.extend(aggr_switches2)
