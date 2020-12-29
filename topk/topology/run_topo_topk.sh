@@ -1,6 +1,6 @@
 ##########################
-BMV2_PATH=~/behavioral-model
-P4C_BM_PATH=~/p4c-bm
+BMV2_PATH=~/p4-dev/behavioral-model
+P4C_BM_PATH=~/p4-dev/p4c-bm
 ##########################
 
 THIS_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
